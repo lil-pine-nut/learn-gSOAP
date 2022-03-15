@@ -129,7 +129,7 @@ void HttpService::ExecuteAdd(struct soap *soap)
 		}
 	}
 
-    result = Num2String(String2Num<double>(num1) + String2Num<double>(num2));
+    result = Num2String(atof(num1.c_str()) + atof(num2.c_str()));
     cerr << "result = " << result << endl;
     soap_response(soap, SOAP_HTML);
     string html_str = "<link rel=\"icon\" href=\"data:;base64,=\">  <!-- 不希望产生 /favicon.ico 的请求 -->";
