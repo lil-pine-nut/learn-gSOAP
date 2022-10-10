@@ -19,7 +19,7 @@ int main()
   greeting response;
   if (soap_POST_send_hello(soap, "http://localhost:8080/cgi-bin/api.cgi", &request) == SOAP_OK
    && soap_POST_recv_greeting(soap, &response) == SOAP_OK)
-    std::cout << "response.message = " << response.message << std::endl;
+    std::cout << response.message << std::endl;
   soap_destroy(soap);
   soap_end(soap);
   soap_free(soap);

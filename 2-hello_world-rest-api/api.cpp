@@ -47,7 +47,7 @@ int main()
   soap_end(soap);                                      // clean up
   soap_free(soap);                                     // free context
 }
-// soap_PUT_greeting 函数貌似有问题 根据 https://www.genivia.com/dev.html#how-rest 找不到跟正确的函数 soap_put_greeting
+// soap_PUT_greeting 函数貌似有问题 根据 https://www.genivia.com/dev.html#how-rest
 int xml_handler(struct soap *soap)                     // REST API function
 {
   hello request;
@@ -56,7 +56,7 @@ int xml_handler(struct soap *soap)                     // REST API function
   greeting response("Hello " + request.name);          // create <greeting><message>Hello name</message></greeting>
   soap->http_content = "text/xml";                     // HTTP content: text/xml
   if (soap_response(soap, SOAP_FILE)                   // HTTP 200 OK
-   || soap_get_greeting(soap, &response, "greeting", NULL) // HTTP body with <greeting>
+   || response.soap_put(soap, "greeting", NULL) // HTTP body with <greeting>
    || soap_end_send(soap))
     return soap->error;
   return SOAP_OK;

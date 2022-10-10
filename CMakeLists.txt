@@ -20,6 +20,10 @@ set(gSOAP_PLUGIN ${CMAKE_SOURCE_DIR}/thirdparty/gsoap-2.8/plugin)
 if(WIN32)
     set(gSOAP_BIN ${CMAKE_SOURCE_DIR}/thirdparty/gsoap-2.8/bin/soapcpp2.exe)
     set(wsdl2h_BIN ${CMAKE_SOURCE_DIR}/thirdparty/gsoap-2.8/bin/wsdl2h.exe)
+    # 使用MinGW编译: cmake -G "MinGW Makefiles" .. 
+    if(${CMAKE_GENERATOR} STREQUAL "MinGW Makefiles")
+    link_libraries(-lwsock32)
+    endif()
 elseif(UNIX AND NOT APPLE)
     set(gSOAP_BIN ${CMAKE_SOURCE_DIR}/thirdparty/gsoap-2.8/bin/soapcpp2)
     set(wsdl2h_BIN ${CMAKE_SOURCE_DIR}/thirdparty/gsoap-2.8/bin/wsdl2h)
@@ -29,6 +33,7 @@ endif(WIN32)
 # add_definitions(-DWITH_NONAMESPACES)
 
 # include三方库
+INCLUDE_DIRECTORIES(${gSOAP_PATH})
 INCLUDE_DIRECTORIES(${gSOAP_PATH}/include)
 INCLUDE_DIRECTORIES(${gSOAP_PATH}/share/gsoap/)
 INCLUDE_DIRECTORIES(${gSOAP_PLUGIN})

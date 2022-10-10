@@ -1,6 +1,11 @@
 #include "calc.nsmap"
 #include "soapH.h"
 #include "HttpService.h"
+#ifdef _WIN32
+#include <chrono> 
+#include <thread>  
+#endif
+
 
 /////////////////////////////////////////////////////////////////////////
 ///宏与全局变量的定义
@@ -107,7 +112,11 @@ int main(int argc, char **argv)
 	while (bind(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
 		perror("bind");
 		std::cerr << "Bind port[" << argv[1] << "] error! " << strerror(errno) << std::endl;
-		sleep(1);
+		#ifdef _WIN32
+        Sleep(1000);
+        #else
+        sleep(1);
+        #endif
 	}
 
 	if (listen(sock, 1024) == -1) {
@@ -147,10 +156,19 @@ int main(int argc, char **argv)
             error_sums++;
             if(error_sums == 1000)
                 break;
+            #ifdef _WIN32
+            Sleep(1000);
+            #else
             sleep(1);
+            #endif
             continue;
         } else if (ret == 0) {	    // no data
+            
+            #ifdef _WIN32
+            Sleep(1);
+            #else
             usleep(100);
+            #endif
             continue;
         }
 
@@ -169,7 +187,11 @@ int main(int argc, char **argv)
 
                 //请求的套接字进入队列，如果队列已满则循环等待
                 while (enqueue(new_fd) == SOAP_EOM)
+                    #ifdef _WIN32
+                    Sleep(1000);
+                    #else
                     sleep(1);
+                    #endif
 			}
 		}
     }
@@ -179,7 +201,11 @@ int main(int argc, char **argv)
     {
         while (enqueue(SOAP_INVALID_SOCKET) == SOAP_EOM)
         {
-            sleep(1);
+            #ifdef _WIN32
+            Sleep(1000000);
+            #else
+            sleep(1000);
+            #endif
         }
     }
     for (i = 0; i < MAX_THR; i++)

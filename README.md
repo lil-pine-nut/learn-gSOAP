@@ -32,6 +32,14 @@ cd build
 cmake -G "Unix Makefiles" ..
 make -j 4
 ```
+## windows+mingw编译
+```
+mkdir build 
+cd build
+cmake -G "MinGW Makefiles" .. 
+make -j 4
+注意: 3-6-calc 的暂未适配mingw
+```
 ## linux下编译
 ### 不编译gsoap：
 ```

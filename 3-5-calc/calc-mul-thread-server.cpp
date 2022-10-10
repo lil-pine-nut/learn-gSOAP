@@ -116,7 +116,11 @@ int main(int argc, char **argv)
         while (!soap_valid_socket(soap_bind(&ServerSoap, NULL, port, BACKLOG)))
         {
             fprintf(stderr, "Bind port error! \n");
+            #ifdef _WIN32
+            Sleep(1000);
+            #else
             sleep(1);
+            #endif
         }
         fprintf(stderr, "socket connection successful %d\n", m);
 
@@ -149,14 +153,22 @@ int main(int argc, char **argv)
                     ((ServerSoap.ip) >> 24) && 0xFF, ((ServerSoap.ip) >> 16) & 0xFF, ((ServerSoap.ip) >> 8) & 0xFF, (ServerSoap.ip) & 0xFF, (ServerSoap.socket));
             //请求的套接字进入队列，如果队列已满则循环等待
             while (enqueue(s) == SOAP_EOM)
+                #ifdef _WIN32
+                Sleep(1000000);
+                #else
                 sleep(1000);
+                #endif
         }
         //服务结束后的清理工作
         for (i = 0; i < MAX_THR; i++)
         {
             while (enqueue(SOAP_INVALID_SOCKET) == SOAP_EOM)
             {
+                #ifdef _WIN32
+                Sleep(1000000);
+                #else
                 sleep(1000);
+                #endif
             }
         }
         for (i = 0; i < MAX_THR; i++)

@@ -34,7 +34,11 @@ bool HttpService::SetSocket(int sock)
 	if (sock != -1) 
     {
 		this->socket = sock;
+		#ifdef _WIN32
+		this->socket_flags = 0;
+		#else
 		this->socket_flags = MSG_NOSIGNAL;
+		#endif
 	} 
     else 
     {
