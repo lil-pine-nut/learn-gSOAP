@@ -3,6 +3,7 @@
 gsoap官方Developer Center：https://www.genivia.com/dev.html
 gsoap源码下载地址：https://sourceforge.net/projects/gsoap2/files/
 gsoap使用总结：https://www.cnblogs.com/liushui-sky/p/9723397.html
+gsoap User guide: https://www.genivia.com/doc/guide/html/index.html
 ```
 
 # 编译
